@@ -5,7 +5,7 @@ import ru.job4j.chess.firuges.Figure;
 import java.util.Arrays;
 
 public final class Logic {
-    public final Figure[] figures = new Figure[32];
+    private final Figure[] figures = new Figure[32];
     private int index = 0;
 
     public void add(Figure figure) {
@@ -16,11 +16,6 @@ public final class Logic {
             throws FigureNotFoundException, ImpossibleMoveException, OccupiedCellException {
         int index = findBy(source);
         Cell[] steps = figures[index].way(dest);
-        for (int i = 0; i < figures.length; i++) {
-            if (figures[i] != null)
-                System.out.println(figures[i].position());
-        }
-        //System.out.println(steps.length);
         if (!free(steps)){
             throw new OccupiedCellException();
         };
@@ -28,18 +23,13 @@ public final class Logic {
     }
 
     private boolean free(Cell[] steps) throws OccupiedCellException {
-        System.out.println("figures.length = " + figures.length);
-        System.out.println("steps.length = " + steps.length);
         for (int i = 0; i < figures.length; i++) {
             for (int j = 0; j < steps.length; j++) {
                 if (figures[i] != null){
-                    System.out.println("i = " + i + " j = " + j);
-                    if (figures[i].position().getX() == steps[j].getX() &&
-                            figures[i].position().getY() == steps[j].getY()){
+                    if (figures[i].position().equals(steps[j])){
                         return false;
                     }
                 }
-
             }
         }
         return true;
